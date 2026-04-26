@@ -366,6 +366,13 @@ def submissions():
         rows = conn.execute("SELECT * FROM submissions ORDER BY submitted_at DESC").fetchall()
     return {"submissions": [dict(row) for row in rows]}
 
+@app.delete("/submissions/{submission_id}")
+def delete_submission(submission_id: int):
+    with get_db() as conn:
+        conn.execute("DELETE FROM submissions WHERE id = ?", (submission_id,))
+        conn.commit()
+    return {"deleted": submission_id}
+
 @app.get("/health")
 def health():
     return {"status": "ok", "db": "connected"}
