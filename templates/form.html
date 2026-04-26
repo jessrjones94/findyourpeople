@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Interest Form | Structured Social Connection</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        /* ===== BASE - Mobile First ===== */
+        *, *::before, *::after { box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f3ef;
+            color: #3d3d3d;
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+            font-size: 18px; /* larger for readability */
+        }
+
+        a.skip-link {
+            position: absolute;
+            top: -999px;
+            left: 0;
+            background: #6b7c6b;
+            color: white;
+            padding: 12px 20px;
+            z-index: 100;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        a.skip-link:focus { top: 0; }
+
+        /* ===== LAYOUT ===== */
+        .page-wrapper {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 24px 20px 60px;
+        }
+
+        /* ===== HEADER ===== */
+        .form-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        .form-header h1 {
+            color: #6b7c6b;
+            font-size: 1.7em;
+            margin: 0 0 10px;
+        }
+        .form-header p {
+            color: #777;
+            margin: 0 0 20px;
+            font-size: 1em;
+        }
+
+        /* ===== PROGRESS BAR ===== */
+        .progress-wrap {
+            background: #e0ddd8;
+            border-radius: 10px;
+            height: 12px;
+            width: 100%;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+        .progress-fill {
+            background: #6b7c6b;
+            height: 100%;
+            width: 16.6%; /* 1 of 6 sections */
+            border-radius: 10px;
+            transition: width 0.4s ease;
+        }
+        .progress-label {
+            font-size: 0.8em;
+            color: #999;
+            text-align: right;
+        }
+
+        /* ===== SECTIONS ===== */
+        .form-section {
+            display: none;
+            background: #fff;
+            border-radius: 16px;
+            padding: 32px 28px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            margin-bottom: 20px;
+        }
+        .form-section.active { display: block; }
+
+        .section-head {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+        .section-head .section-num {
+            background: #8b6b8b;
+            color: white;
+            font-size: 0.75em;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+        .section-title {
+            color: #5a5a5a;
+            font-size: 0.95em;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+        }
+        h2.form-question {
+            color: #4a4a4a;
+            font-size: 1.1em;
+            margin: 16px 0 12px;
+            line-height: 1.5;
+            font-weight: 600;
+        }
+        .section-hint {
+            font-size: 0.85em;
+            color: #888;
+            margin-bottom: 16px;
+            line-height: 1.6;
+        }
+
+        /* ===== FIELDS ===== */
+        label.field-label {
+            display: block;
+            font-weight: 600;
+            margin: 20px 0 8px;
+            color: #4a4a4a;
+            font-size: 1em;
+        }
+        label.field-label:first-child { margin-top: 0; }
+
+        .label-hint {
+            font-weight: 400;
+            color: #888;
+            font-size: 0.88em;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1em;
+            font-family: inherit;
+            background: #fafafa;
+            transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+            line-height: 1.5;
+            /* Larger touch target */
+            min-height: 52px;
+        }
+        input:hover, textarea:hover { border-color: #c0bdb8; }
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #6b7c6b;
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(107,124,107,0.12);
+        }
+        textarea {
+            min-height: 110px;
+            resize: vertical;
+            overflow-y: hidden;
+            transition: height 0.2s ease;
+        }
+
+        /* ===== RADIO & CHECKBOX GROUPS ===== */
+        .option-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .option-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 14px 16px;
+            background: #f8f6f3;
+            border: 2px solid transparent;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.2s, border-color 0.2s;
+            position: relative;
+        }
+        .option-item:hover {
+            background: #f0ebe6;
+            border-color: #e0ddd8;
+        }
+        .option-item.selected {
+            background: #f0f5f0;
+            border-color: #6b7c6b;
+        }
+        .option-item input[type="radio"],
+        .option-item input[type="checkbox"] {
+            width: 22px;
+            height: 22px;
+            margin: 1px 0 0 0;
+            accent-color: #6b7c6b;
+            flex-shrink: 0;
+            cursor: pointer;
+            /* Override browser defaults for larger hit area */
+            min-height: 22px;
+        }
+        .option-item .option-text {
+            font-size: 1em;
+            line-height: 1.5;
+            color: #4a4a4a;
+        }
+        .option-item .option-desc {
+            font-size: 0.85em;
+            color: #888;
+            margin-top: 2px;
+        }
+
+        /* ===== NAVIGATION BUTTONS ===== */
+        .section-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            margin-top: 28px;
+            padding-top: 24px;
+            border-top: 1px solid #f0ebe6;
+        }
+        .nav-btn {
+            padding: 14px 28px;
+            border-radius: 10px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: background 0.2s, transform 0.1s;
+            font-family: inherit;
+            min-height: 52px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .nav-btn:active { transform: scale(0.98); }
+        .nav-btn.prev {
+            background: #f0ebe6;
+            color: #666;
+        }
+        .nav-btn.prev:hover { background: #e8e2db; }
+        .nav-btn.next, .nav-btn.submit {
+            background: #6b7c6b;
+            color: white;
+        }
+        .nav-btn.next:hover, .nav-btn.submit:hover { background: #5a6a5a; }
+        .nav-btn.submit { background: #6b7c6b; }
+
+        /* ===== PRIVACY ===== */
+        .privacy-note {
+            margin-top: 24px;
+            padding: 16px 20px;
+            background: #f5f3ef;
+            border-radius: 10px;
+            font-size: 0.85em;
+            color: #777;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        /* ===== SUBMIT SECTION ===== */
+        .submit-section {
+            text-align: center;
+        }
+        .submit-section p {
+            font-size: 0.95em;
+            color: #777;
+            margin-bottom: 20px;
+        }
+
+        /* ===== SECTION INTRO ANIMATIONS - subtle ===== */
+        .form-section {
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== MOBILE OPTIMIZATIONS ===== */
+        @media (max-width: 600px) {
+            body { font-size: 17px; }
+            .page-wrapper { padding: 16px 14px 50px; }
+            .form-section { padding: 24px 18px; border-radius: 12px; }
+            h2.form-question { font-size: 1.05em; }
+            .option-item { padding: 13px 14px; }
+            .nav-btn { padding: 14px 20px; min-height: 54px; font-size: 1em; }
+            .nav-btn.full-width { width: 100%; }
+            .section-nav { gap: 10px; }
+        }
+
+        /* ===== HIGH CONTRAST / REDUCED MOTION ===== */
+        @media (prefers-reduced-motion: reduce) {
+            .form-section { animation: none; }
+            .progress-fill { transition: none; }
+        }
+
+        @media (prefers-contrast: high) {
+            .option-item { border: 2px solid #333; }
+            input[type="text"], input[type="email"], textarea { border: 2px solid #333; }
+        }
+
+        /* ===== CHAR COUNTER ===== */
+        .char-counter {
+            font-size: 0.78em;
+            color: #aaa;
+            text-align: right;
+            margin-top: 4px;
+            min-height: 18px;
+            font-family: monospace;
+        }
+        .char-counter.near-limit { color: #c07040; }
+        .char-counter.at-limit {
+            color: #b04040;
+            font-weight: 600;
+            background: #fff0f0;
+            padding: 3px 8px;
+            border-radius: 6px;
+            display: inline-block;
+            margin-top: 6px;
+        }
+
+        /* ===== CHECKBOX CUSTOM ===== */
+        .checkbox-wrap {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 0;
+        }
+        .checkbox-wrap input[type="checkbox"] {
+            width: 24px;
+            height: 24px;
+            accent-color: #6b7c6b;
+            cursor: pointer;
+        }
+        .checkbox-wrap label {
+            margin: 0;
+            font-weight: 400;
+            cursor: pointer;
+            font-size: 0.95em;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-form" class="skip-link">Skip to form</a>
+
+    <div class="page-wrapper" id="main-form" tabindex="-1">
+
+        <!-- Header -->
+        <header class="form-header">
+            <h1>✨ Interest Form</h1>
+            <p>Structured Social Connection Program — take your time, there's no rush</p>
+            <div class="progress-wrap" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="6" aria-label="Form progress">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-label" id="progressLabel">Section 1 of 6</div>
+        </header>
+
+        <form id="multiStepForm" action="/submit" method="post" novalidate>
+
+            <!-- SECTION 1: Basics -->
+            <section class="form-section active" id="section1" aria-labelledby="s1-title">
+                <div class="section-head">
+                    <span class="section-num">1</span>
+                    <span class="section-title">Basics</span>
+                </div>
+                <h2 class="form-question" id="s1-title">Let's start with the basics</h2>
+
+                <label for="name" class="field-label">Your name <span class="label-hint">(or a nickname — whatever you're comfortable with)</span></label>
+                <input type="text" id="name" name="name" placeholder="e.g. Alex" autocomplete="name" required maxlength="100">
+                <div class="char-counter" id="name_counter" aria-live="polite"></div>
+
+                <label for="age" class="field-label">Your age</label>
+                <input type="text" id="age" name="age" placeholder="e.g. 27" inputmode="numeric" required maxlength="3">
+
+                <fieldset style="border:none;padding:0;margin:20px 0 0;">
+                    <legend class="field-label">Are you filling this out for yourself or someone else?</legend>
+                    <div class="option-list">
+                        <label class="option-item"><input type="radio" name="self_or_other" value="self" checked><span class="option-text">For myself</span></label>
+                        <label class="option-item"><input type="radio" name="self_or_other" value="parent"><span class="option-text">As a parent</span></label>
+                        <label class="option-item"><input type="radio" name="self_or_other" value="caregiver"><span class="option-text">As a caregiver</span></label>
+                    </div>
+                </fieldset>
+
+                <label for="preferred_contact" class="field-label">How should I reach you? <span class="label-hint">(required — email or phone)</span></label>
+                <input type="text" id="preferred_contact" name="preferred_contact" placeholder="e.g. alex@email.com" required maxlength="200">
+                <div class="char-counter" id="preferred_contact_counter" aria-live="polite"></div>
+
+                <div class="section-nav">
+                    <div></div>
+                    <button type="button" class="nav-btn next" onclick="nextSection(1)">Continue →</button>
+                </div>
+            </section>
+
+            <!-- SECTION 2: Support Needs -->
+            <section class="form-section" id="section2" aria-labelledby="s2-title">
+                <div class="section-head">
+                    <span class="section-num">2</span>
+                    <span class="section-title">Support Needs</span>
+                </div>
+                <h2 class="form-question" id="s2-title">How would you describe your support needs?</h2>
+                <p class="section-hint">This helps us create a group environment that feels comfortable for everyone.</p>
+
+                <fieldset style="border:none;padding:0;margin:0;">
+                    <legend class="field-label">Choose the one that fits best:</legend>
+                    <div class="option-list">
+                        <label class="option-item"><input type="radio" name="support_needs" value="independent"><span class="option-text">Independent</span><span class="option-desc">I'm mostly self-sufficient in my daily life</span></label>
+                        <label class="option-item"><input type="radio" name="support_needs" value="some_support"><span class="option-text">Some support needed</span><span class="option-desc">I occasionally need a bit of help</span></label>
+                        <label class="option-item"><input type="radio" name="support_needs" value="prefer_to_describe"><span class="option-text">I'd rather describe it myself</span><span class="option-desc">Use the space below</span></label>
+                    </div>
+                </fieldset>
+
+                <label for="support_needs_description" class="field-label">Anything else to share about support needs? <span class="label-hint">(optional)</span></label>
+                <textarea id="support_needs_description" name="support_needs_description" placeholder="There's no right way to describe this — just whatever feels right to share." maxlength="1000"></textarea>
+                <div class="char-counter" id="support_needs_description_counter" aria-live="polite"></div>
+
+                <label for="social_challenges" class="field-label">What are the biggest challenges with social situations right now?</label>
+                <textarea id="social_challenges" name="social_challenges" placeholder="For example: feeling overwhelmed in groups, difficulty with small talk, anxiety in new places, trouble reading social cues..." maxlength="1500"></textarea>
+                <div class="char-counter" id="social_challenges_counter" aria-live="polite"></div>
+
+                <div class="section-nav">
+                    <button type="button" class="nav-btn prev" onclick="prevSection(2)">← Back</button>
+                    <button type="button" class="nav-btn next" onclick="nextSection(2)">Continue →</button>
+                </div>
+            </section>
+
+            <!-- SECTION 3: Social Preferences -->
+            <section class="form-section" id="section3" aria-labelledby="s3-title">
+                <div class="section-head">
+                    <span class="section-num">3</span>
+                    <span class="section-title">Social Preferences</span>
+                </div>
+                <h2 class="form-question" id="s3-title">Which sounds most comfortable to start with?</h2>
+                <p class="section-hint">There are no wrong answers here — we want to know what feels safest.</p>
+
+                <fieldset style="border:none;padding:0;margin:0;">
+                    <legend class="field-label">Select all that apply:</legend>
+                    <div class="option-list">
+                        <label class="option-item"><input type="checkbox" name="comfortable_with" value="very_small_group"><span class="option-text">Very small group</span><span class="option-desc">3–5 people feels less overwhelming</span></label>
+                        <label class="option-item"><input type="checkbox" name="comfortable_with" value="structured_activity"><span class="option-text">Structured activity</span><span class="option-desc">Games, guided interaction, or a planned activity</span></label>
+                        <label class="option-item"><input type="checkbox" name="comfortable_with" value="casual_hangout"><span class="option-text">Casual hangout</span><span class="option-desc">Light guidance, but mostly relaxed</span></label>
+                        <label class="option-item"><input type="checkbox" name="comfortable_with" value="not_sure"><span class="option-text">Not sure yet</span><span class="option-desc">I need more information first</span></label>
+                    </div>
+                </fieldset>
+
+                <label class="field-label" style="margin-top:28px;">Which tend to feel most overwhelming? <span class="label-hint">(select all that apply)</span></label>
+                <fieldset style="border:none;padding:0;margin:0;">
+                    <legend class="sr-only">Things that feel overwhelming:</legend>
+                    <div class="option-list">
+                        <label class="option-item"><input type="checkbox" name="overwhelming_things" value="large_groups"><span class="option-text">Large groups</span></label>
+                        <label class="option-item"><input type="checkbox" name="overwhelming_things" value="loud_environments"><span class="option-text">Loud environments</span></label>
+                        <label class="option-item"><input type="checkbox" name="overwhelming_things" value="unstructured_social"><span class="option-text">Unstructured social time</span><span class="option-desc">Free time without a clear purpose</span></label>
+                        <label class="option-item"><input type="checkbox" name="overwhelming_things" value="pressure_to_talk"><span class="option-text">Pressure to talk</span><span class="option-desc">Feeling like I have to fill silence</span></label>
+                        <label class="option-item"><input type="checkbox" name="overwhelming_things" value="new_environments"><span class="option-text">New environments</span><span class="option-desc">Places I don't know yet</span></label>
+                    </div>
+                </fieldset>
+
+                <div class="section-nav">
+                    <button type="button" class="nav-btn prev" onclick="prevSection(3)">← Back</button>
+                    <button type="button" class="nav-btn next" onclick="nextSection(3)">Continue →</button>
+                </div>
+            </section>
+
+            <!-- SECTION 4: Goals -->
+            <section class="form-section" id="section4" aria-labelledby="s4-title">
+                <div class="section-head">
+                    <span class="section-num">4</span>
+                    <span class="section-title">Goals</span>
+                </div>
+                <h2 class="form-question" id="s4-title">What would you hope to get from something like this?</h2>
+                <textarea id="goals" name="goals" placeholder="For example: making friends, feeling more confident in conversations, practicing social skills in a low-pressure setting..." maxlength="1500"></textarea>
+                <div class="char-counter" id="goals_counter" aria-live="polite"></div>
+
+                <fieldset style="border:none;padding:0;margin:20px 0 0;">
+                    <legend class="field-label">What's your primary focus right now?</legend>
+                    <div class="option-list">
+                        <label class="option-item"><input type="radio" name="primary_focus" value="making_friends"><span class="option-text">Making friends</span></label>
+                        <label class="option-item"><input type="radio" name="primary_focus" value="social_confidence"><span class="option-text">Social confidence</span><span class="option-desc">Feeling more comfortable around others</span></label>
+                        <label class="option-item"><input type="radio" name="primary_focus" value="practicing_conversation"><span class="option-text">Practicing conversation</span><span class="option-desc">Learning what to say and how to say it</span></label>
+                        <label class="option-item"><input type="radio" name="primary_focus" value="eventually_dating"><span class="option-text">Eventually dating</span></label>
+                        <label class="option-item"><input type="radio" name="primary_focus" value="other" id="focus_other"><span class="option-text">Something else</span><span class="option-desc">Tell us below</span></label>
+                    </div>
+                </fieldset>
+
+                <div id="other_focus_wrap" style="display:none; margin-top: 12px;">
+                    <textarea id="primary_focus_other" name="primary_focus_other" placeholder="What would you like to focus on?" maxlength="1000"></textarea>
+                    <div class="char-counter" id="primary_focus_other_counter" aria-live="polite"></div>
+                </div>
+
+                <div class="section-nav">
+                    <button type="button" class="nav-btn prev" onclick="prevSection(4)">← Back</button>
+                    <button type="button" class="nav-btn next" onclick="nextSection(4)">Continue →</button>
+                </div>
+            </section>
+
+            <!-- SECTION 5: Comfort & Safety -->
+            <section class="form-section" id="section5" aria-labelledby="s5-title">
+                <div class="section-head">
+                    <span class="section-num">5</span>
+                    <span class="section-title">Comfort & Safety</span>
+                </div>
+                <h2 class="form-question" id="s5-title">Would having the option to "step away" or take a break be important to you?</h2>
+
+                <fieldset style="border:none;padding:0;margin:0;">
+                    <legend class="sr-only">Is stepping away important?</legend>
+                    <div class="option-list">
+                        <label class="option-item"><input type="radio" name="step_away_important" value="yes"><span class="option-text">Yes — definitely</span><span class="option-desc">Knowing I can leave without explanation helps me relax</span></label>
+                        <label class="option-item"><input type="radio" name="step_away_important" value="no"><span class="option-text">No</span></label>
+                        <label class="option-item"><input type="radio" name="step_away_important" value="maybe"><span class="option-text">Maybe</span></label>
+                    </div>
+                </fieldset>
+
+                <label for="comfort_helpers" class="field-label">What helps you feel most comfortable in new environments?</label>
+                <textarea id="comfort_helpers" name="comfort_helpers" placeholder="For example: knowing the schedule ahead of time, quiet spaces, having an exit option, being able to bring a comfort item..." maxlength="1000"></textarea>
+                <div class="char-counter" id="comfort_helpers_counter" aria-live="polite"></div>
+
+                <div class="section-nav">
+                    <button type="button" class="nav-btn prev" onclick="prevSection(5)">← Back</button>
+                    <button type="button" class="nav-btn next" onclick="nextSection(5)">Continue →</button>
+                </div>
+            </section>
+
+            <!-- SECTION 6: Logistics -->
+            <section class="form-section" id="section6" aria-labelledby="s6-title">
+                <div class="section-head">
+                    <span class="section-num">6</span>
+                    <span class="section-title">Logistics</span>
+                </div>
+                <h2 class="form-question" id="s6-title">When are you generally available?</h2>
+                <p class="section-hint">This helps us find times that work for everyone in the group.</p>
+
+                <fieldset style="border:none;padding:0;margin:0;">
+                    <legend class="field-label">Select all that apply:</legend>
+                    <div class="option-list">
+                        <label class="option-item"><input type="checkbox" name="availability" value="weekday_evenings"><span class="option-text">Weekday evenings</span><span class="option-desc">After 5 or 6pm</span></label>
+                        <label class="option-item"><input type="checkbox" name="availability" value="weekends"><span class="option-text">Weekends</span></label>
+                        <label class="option-item"><input type="checkbox" name="availability" value="flexible"><span class="option-text">I'm flexible</span><span class="option-desc">My schedule varies</span></label>
+                    </div>
+                </fieldset>
+
+                <h2 class="form-question" style="margin-top:28px;">Anything you want me to know?</h2>
+                <p class="section-hint">This is the most important question on the form 💜</p>
+                <textarea id="anything_else" name="anything_else" placeholder="Anything at all — sensory needs, communication preferences, fears, hopes, questions, anything that would help us make this a positive experience for you..." maxlength="2000"></textarea>
+                <div class="char-counter" id="anything_else_counter" aria-live="polite"></div>
+
+                <div class="section-nav">
+                    <button type="button" class="nav-btn prev" onclick="prevSection(6)">← Back</button>
+                    <button type="button" class="nav-btn submit" onclick="document.getElementById('multiStepForm').submit()">Submit Form ✨</button>
+                </div>
+            </section>
+
+            <!-- Privacy note -->
+            <div class="privacy-note">
+                🔒 Your information is private and will only be used to follow up about the pilot program. You can skip any question you don't want to answer.
+            </div>
+
+        </form>
+    </div>
+
+    <!-- Screen reader only class -->
+    <style>.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}</style>
+
+    <script>
+        let currentSection = 1;
+        const totalSections = 6;
+
+        function showSection(num) {
+            // Hide all, show current
+            document.querySelectorAll('.form-section').forEach(function(sec) {
+                sec.classList.remove('active');
+            });
+            document.getElementById('section' + num).classList.add('active');
+            currentSection = num;
+
+            // Update progress
+            const pct = (num / totalSections) * 100;
+            document.getElementById('progressFill').style.width = pct + '%';
+            document.getElementById('progressLabel').textContent = 'Section ' + num + ' of ' + totalSections;
+
+            // Update aria
+            document.querySelector('.progress-fill').parentElement.setAttribute('aria-valuenow', num);
+
+            // Scroll to top of form
+            document.getElementById('main-form').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function nextSection(from) {
+            if (from < totalSections) showSection(from + 1);
+        }
+
+        function prevSection(from) {
+            if (from > 1) showSection(from - 1);
+        }
+
+        // Option item visual selection feedback
+        document.querySelectorAll('.option-item input[type="radio"], .option-item input[type="checkbox"]').forEach(function(input) {
+            input.addEventListener('change', function() {
+                var group = this.closest('.option-list');
+                if (this.type === 'radio') {
+                    group.querySelectorAll('.option-item').forEach(function(item) {
+                        item.classList.remove('selected');
+                    });
+                }
+                if (this.checked) {
+                    this.closest('.option-item').classList.add('selected');
+                } else {
+                    this.closest('.option-item').classList.remove('selected');
+                }
+            });
+        });
+
+        // Init: mark checked items as selected
+        document.querySelectorAll('.option-item input:checked').forEach(function(input) {
+            input.closest('.option-item').classList.add('selected');
+        });
+
+        // Keyboard accessibility for option items
+        document.querySelectorAll('.option-item').forEach(function(item) {
+            item.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    var input = this.querySelector('input');
+                    if (input) {
+                        input.click();
+                        e.preventDefault();
+                    }
+                }
+            });
+        });
+
+        // Toggle "Something else" text input
+        var focusOther = document.getElementById('focus_other');
+        var otherWrap = document.getElementById('other_focus_wrap');
+        if (focusOther && otherWrap) {
+            focusOther.closest('.option-item').addEventListener('click', function() {
+                setTimeout(function() {
+                    otherWrap.style.display = focusOther.checked ? 'block' : 'none';
+                }, 10);
+            });
+        }
+
+        // Character counters + auto-grow
+        function updateCounter(textarea) {
+            var counter = document.getElementById(textarea.id + '_counter');
+            if (!counter) return;
+            var len = textarea.value.length;
+            var max = parseInt(textarea.getAttribute('maxlength') || '99999');
+            counter.textContent = len + ' / ' + max + ' characters';
+            counter.className = 'char-counter';
+            if (len >= max) {
+                counter.classList.add('at-limit');
+                counter.textContent = '\u2716\ufe0f You\'ve reached the limit (' + max + ' characters) — that\'s okay!';
+            } else if (len >= max * 0.85) {
+                counter.classList.add('near-limit');
+            }
+            // Auto-grow textarea
+            textarea.style.height = 'auto';
+            textarea.style.height = textarea.scrollHeight + 'px';
+        }
+
+        document.querySelectorAll('textarea[maxlength], input[maxlength]').forEach(function(field) {
+            updateCounter(field);
+            field.addEventListener('input', function() { updateCounter(field); });
+        });
+    </script>
+</body>
+</html>

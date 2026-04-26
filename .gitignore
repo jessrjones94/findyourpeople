@@ -1,0 +1,17 @@
+__pycache__/
+*.pyc
+venv/
+.venv/
+node_modules/
+package.json
+package-lock.json
+*.db
+reports/*.json
+reports/reports/
+reports/.last_count
+reports/.traffic_state.json
+reports/*.txt
+test_submissions.py
+tunnel.log
+tunnel_url.txt
+start_tunnel.sh
