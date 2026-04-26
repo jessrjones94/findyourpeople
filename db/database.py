@@ -13,6 +13,12 @@ def init_db():
     """Create tables if they don't exist."""
     with get_db() as conn:
         conn.executescript("""
+            CREATE TABLE IF NOT EXISTS page_views (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                page TEXT NOT NULL,
+                viewed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
+
             CREATE TABLE IF NOT EXISTS submissions (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -51,3 +57,17 @@ def init_db():
 
 # Initialize on import
 init_db()
+
+def record_page_view(page: str):
+    """Record a page view. Call this on each page load."""
+    with get_db() as conn:
+        conn.execute("INSERT INTO page_views (page) VALUES (?)", (page,))
+        conn.commit()
+
+def get_page_view_counts() -> dict:
+    """Return dict of {page: view_count} for all tracked pages."""
+    with get_db() as conn:
+        rows = conn.execute(
+            "SELECT page, COUNT(*) as count FROM page_views GROUP BY page"
+        ).fetchall()
+    return {row["page"]: row["count"] for row in rows}

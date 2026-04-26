@@ -2,7 +2,7 @@ from fastapi import FastAPI, Form
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 import os
-from db.database import get_db, init_db
+from db.database import get_db, init_db, record_page_view, get_page_view_counts
 
 website_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -196,6 +196,7 @@ HTML_INDEX = """<!DOCTYPE html>
             Questions? <a href="/form">Fill out the interest form</a> and we'll follow up.
         </div>
     </div>
+    <script>fetch("/track",{method:"POST",body:new URLSearchParams({page:location.pathname}),headers:{"Content-Type":"application/x-www-form-urlencoded"}}).catch(()=>{});</script>
 </body>
 </html>"""
 
@@ -286,6 +287,7 @@ HTML_SUCCESS = """<!DOCTYPE html>
 
         <a href="/" class="cta-btn">Back to Home</a>
     </div>
+    <script>fetch("/track",{method:"POST",body:new URLSearchParams({page:location.pathname}),headers:{"Content-Type":"application/x-www-form-urlencoded"}}).catch(()=>{});</script>
 </body>
 </html>"""
 
@@ -376,3 +378,17 @@ def delete_submission(submission_id: int):
 @app.get("/health")
 def health():
     return {"status": "ok", "db": "connected"}
+
+# --- Page view tracking (unnoticeable, no UI impact) ---
+@app.post("/track")
+def track_page(page: str = Form(...)):
+    """Lightweight endpoint to record a page view. Called by tiny inline JS."""
+    record_page_view(page)
+    return {"ok": True}
+
+@app.get("/stats")
+def stats():
+    """Page view counts — for your own reference, not shown publicly."""
+    counts = get_page_view_counts()
+    total = sum(counts.values())
+    return {"total": total, "pages": counts}

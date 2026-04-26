@@ -1,26 +1,33 @@
 #!/usr/bin/env python3
 """
 Website traffic and form submission monitor.
-Checks for new submissions and reports traffic stats every 15 minutes.
+Checks for new submissions from the live Render URL and reports stats every 15 minutes.
 """
-import sqlite3
 import os
 import json
+import urllib.request
 from datetime import datetime
 from pathlib import Path
 
-DB_PATH = "/home/jess/website/db/intake.db"
+SITE_URL = "https://findyourpeople.onrender.com"
 STATE_FILE = "/home/jess/website/reports/.traffic_state.json"
 REPORT_DIR = "/home/jess/website/reports/reports"
 os.makedirs(REPORT_DIR, exist_ok=True)
 
 
 def get_submissions():
-    conn = sqlite3.connect(DB_PATH)
-    conn.row_factory = sqlite3.Row
-    rows = conn.execute("SELECT * FROM submissions ORDER BY submitted_at DESC").fetchall()
-    conn.close()
-    return [dict(r) for r in rows]
+    """Fetch submissions from the live Render site."""
+    try:
+        req = urllib.request.Request(
+            f"{SITE_URL}/submissions",
+            headers={"Accept": "application/json"}
+        )
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            data = json.loads(resp.read().decode())
+            return data.get("submissions", [])
+    except Exception as e:
+        print(f"Error fetching submissions: {e}")
+        return []
 
 
 def load_state():
@@ -40,7 +47,6 @@ def build_report(new_count, all_submissions):
 
     # Calculate stats
     total = len(all_submissions)
-    new_since_launch = total  # all are new since we don't have prior data
     self_referred = [s for s in all_submissions if s.get("self_or_other") == "self"]
     parent_referred = [s for s in all_submissions if s.get("self_or_other") in ("parent", "caregiver")]
 
@@ -78,6 +84,7 @@ def build_report(new_count, all_submissions):
         "=" * 55,
         f"📊 WEBSITE TRAFFIC + SUBMISSION REPORT",
         f"⏰ Checked: {timestamp}",
+        f"🌐 {SITE_URL}",
         f"📬 Total submissions: {total}",
         f"🆕 New since last check: {new_count}",
         "=" * 55,

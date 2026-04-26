@@ -172,5 +172,6 @@
 
         <a href="/" class="back-link">← Back to home</a>
     </div>
+    <script>fetch("/track",{method:"POST",body:new URLSearchParams({page:location.pathname}),headers:{"Content-Type":"application/x-www-form-urlencoded"}}).catch(()=>{});</script>
 </body>
 </html>
