@@ -11,5 +11,6 @@
         <p>This is an intake form application.</p>
         <a href="/form"><button>Fill out the form</button></a>
     </div>
+    <script>fetch("/track",{method:"POST",body:new URLSearchParams({page:location.pathname}),headers:{"Content-Type":"application/x-www-form-urlencoded"}}).catch(()=>{});</script>
 </body>
 </html>

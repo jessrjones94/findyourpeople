@@ -12,5 +12,6 @@
         <a href="/form"><button>Submit another</button></a>
         <a href="/"><button>Home</button></a>
     </div>
+    <script>fetch("/track",{method:"POST",body:new URLSearchParams({page:location.pathname}),headers:{"Content-Type":"application/x-www-form-urlencoded"}}).catch(()=>{});</script>
 </body>
 </html>
