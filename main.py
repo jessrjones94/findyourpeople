@@ -18,6 +18,14 @@ HTML_INDEX = """<!DOCTYPE html>
 <head>
     <title>Structured Social Connection | Neurodivergent Pilot Program</title>
     <link rel="stylesheet" href="/static/style.css">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QMXR7EX8D3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-QMXR7EX8D3');
+    </script>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
