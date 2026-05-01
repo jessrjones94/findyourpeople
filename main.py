@@ -193,7 +193,7 @@ HTML_INDEX = """<!DOCTYPE html>
         </div>
 
         <div class="footer">
-            Questions? <a href="/form">Fill out the interest form</a> and we'll follow up.
+            Questions? <a href="/contact">Contact us</a> or <a href="/form">fill out the interest form</a> and we'll follow up.
         </div>
     </div>
     <script>fetch("/track",{method:"POST",body:new URLSearchParams({page:location.pathname}),headers:{"Content-Type":"application/x-www-form-urlencoded"}}).catch(()=>{});</script>
@@ -360,6 +360,11 @@ def faq():
 @app.get("/pilot", response_class=HTMLResponse)
 def pilot():
     path = os.path.join(website_dir, "templates", "pilot.html")
+    return HTMLResponse(open(path).read())
+
+@app.get("/contact", response_class=HTMLResponse)
+def contact():
+    path = os.path.join(website_dir, "templates", "contact.html")
     return HTMLResponse(open(path).read())
 
 @app.get("/submissions")

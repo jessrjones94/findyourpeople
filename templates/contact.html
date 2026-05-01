@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Contact | Find Your People</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f9f7f4;
+            color: #3d3d3d;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 48px 40px;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+        h1 {
+            color: #6b7c6b;
+            margin-bottom: 8px;
+        }
+        .subtitle {
+            color: #888;
+            margin-bottom: 36px;
+            font-size: 1.05em;
+        }
+        .contact-card {
+            background: #faf8f5;
+            border-radius: 10px;
+            padding: 24px;
+            margin: 20px 0;
+            border: 1px solid #f0ebe6;
+        }
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            margin: 18px 0;
+        }
+        .contact-icon {
+            font-size: 1.4em;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        .contact-label {
+            font-weight: 600;
+            color: #6b7c6b;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .contact-value {
+            color: #3d3d3d;
+            margin-top: 2px;
+        }
+        .contact-note {
+            margin-top: 28px;
+            padding: 16px;
+            background: #f0ebe6;
+            border-radius: 8px;
+            font-size: 0.9em;
+            color: #666;
+        }
+        .nav-footer {
+            text-align: center;
+            margin-top: 36px;
+            padding-top: 24px;
+            border-top: 2px solid #f0ebe6;
+        }
+        .nav-footer a {
+            color: #8b6b8b;
+            text-decoration: none;
+            margin: 0 12px;
+            font-weight: 500;
+        }
+        .nav-footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Contact Us</h1>
+        <p class="subtitle">Have questions or ready to take the first step? Reach out anytime.</p>
+
+        <div class="contact-card">
+            <div class="contact-item">
+                <span class="contact-icon">📱</span>
+                <div>
+                    <div class="contact-label">Text or Call</div>
+                    <div class="contact-value">
+                        <a href="sms:+13526098705">+1 (352) 609-8705</a><br>
+                        <span style="font-size: 0.85em; color: #888;">Text preferred — we'll respond within 24–48 hours</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-item">
+                <span class="contact-icon">✉️</span>
+                <div>
+                    <div class="contact-label">Email</div>
+                    <div class="contact-value">
+                        <a href="mailto:findyourpeoplefl@gmail.com">findyourpeoplefl@gmail.com</a><br>
+                        <span style="font-size: 0.85em; color: #888;">For questions, partnership inquiries, or to learn more</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact-note">
+            <strong>What to expect:</strong><br>
+            We review every message and respond within 24–48 hours. If you've filled out the interest form, we're already in touch — no need to contact us twice. If you're not sure whether this group is right for you, still reach out. We're happy to answer questions.
+        </div>
+
+        <div class="nav-footer">
+            <a href="/">Home</a>
+            <a href="/about">About</a>
+            <a href="/faq">FAQ</a>
+            <a href="/form">Join Form</a>
+        </div>
+    </div>
+    <script>fetch("/track",{method:"POST",body:new URLSearchParams({page:location.pathname}),headers:{"Content-Type":"application/x-www-form-urlencoded"}}).catch(()=>{});</script>
+</body>
+</html>
