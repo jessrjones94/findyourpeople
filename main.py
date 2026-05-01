@@ -98,11 +98,9 @@ HTML_INDEX = """<!DOCTYPE html>
         .section ul {
             margin: 12px 0;
             padding-left: 24px;
-            list-style-position: outside;
         }
         .section li {
             margin: 8px 0;
-            padding-left: 4px;
             line-height: 1.5;
         }
         .features-grid {
