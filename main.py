@@ -96,11 +96,14 @@ HTML_INDEX = """<!DOCTYPE html>
             font-size: 1.15em;
         }
         .section ul {
-            margin: 10px 0;
-            padding-left: 20px;
+            margin: 12px 0;
+            padding-left: 24px;
+            list-style-position: outside;
         }
         .section li {
-            margin: 6px 0;
+            margin: 8px 0;
+            padding-left: 4px;
+            line-height: 1.5;
         }
         .features-grid {
             display: grid;
