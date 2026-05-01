@@ -13,7 +13,7 @@
             padding: 20px;
         }
         .container {
-            max-width: 600px;
+            max-width: 540px;
             margin: 0 auto;
             background: #fff;
             padding: 48px 40px;
@@ -23,48 +23,68 @@
         h1 {
             color: #6b7c6b;
             margin-bottom: 8px;
+            text-align: center;
         }
         .subtitle {
             color: #888;
             margin-bottom: 36px;
             font-size: 1.05em;
+            text-align: center;
         }
         .contact-card {
             background: #faf8f5;
             border-radius: 10px;
-            padding: 24px;
+            padding: 28px 32px;
             margin: 20px 0;
             border: 1px solid #f0ebe6;
         }
-        .contact-item {
+        .contact-row {
             display: flex;
-            align-items: flex-start;
-            gap: 14px;
-            margin: 18px 0;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            padding: 16px 0;
+            border-bottom: 1px solid #f0ebe6;
+        }
+        .contact-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
         }
         .contact-icon {
-            font-size: 1.4em;
+            font-size: 1.5em;
             flex-shrink: 0;
-            margin-top: 2px;
+            width: 36px;
+            text-align: center;
+        }
+        .contact-body {
+            flex: 1;
         }
         .contact-label {
             font-weight: 600;
             color: #6b7c6b;
-            font-size: 0.9em;
+            font-size: 0.85em;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            margin-bottom: 2px;
         }
         .contact-value {
             color: #3d3d3d;
+            font-size: 1.1em;
+        }
+        .contact-sub {
+            font-size: 0.82em;
+            color: #888;
             margin-top: 2px;
         }
         .contact-note {
             margin-top: 28px;
-            padding: 16px;
+            padding: 16px 20px;
             background: #f0ebe6;
             border-radius: 8px;
             font-size: 0.9em;
             color: #666;
+            text-align: center;
+            line-height: 1.7;
         }
         .nav-footer {
             text-align: center;
@@ -89,32 +109,32 @@
         <p class="subtitle">Have questions or ready to take the first step? Reach out anytime.</p>
 
         <div class="contact-card">
-            <div class="contact-item">
+            <div class="contact-row">
                 <span class="contact-icon">📱</span>
-                <div>
+                <div class="contact-body">
                     <div class="contact-label">Text or Call</div>
                     <div class="contact-value">
-                        <a href="sms:+13526098705">+1 (352) 609-8705</a><br>
-                        <span style="font-size: 0.85em; color: #888;">Text preferred — we'll respond within 24–48 hours</span>
+                        <a href="sms:+13526098705">+1 (352) 609-8705</a>
                     </div>
+                    <div class="contact-sub">Text preferred — we respond within 24–48 hours</div>
                 </div>
             </div>
 
-            <div class="contact-item">
+            <div class="contact-row">
                 <span class="contact-icon">✉️</span>
-                <div>
+                <div class="contact-body">
                     <div class="contact-label">Email</div>
                     <div class="contact-value">
-                        <a href="mailto:findyourpeoplefl@gmail.com">findyourpeoplefl@gmail.com</a><br>
-                        <span style="font-size: 0.85em; color: #888;">For questions, partnership inquiries, or to learn more</span>
+                        <a href="mailto:findyourpeoplefl@gmail.com">findyourpeoplefl@gmail.com</a>
                     </div>
+                    <div class="contact-sub">Questions, partnerships, or to learn more</div>
                 </div>
             </div>
         </div>
 
         <div class="contact-note">
             <strong>What to expect:</strong><br>
-            We review every message and respond within 24–48 hours. If you've filled out the interest form, we're already in touch — no need to contact us twice. If you're not sure whether this group is right for you, still reach out. We're happy to answer questions.
+            We review every message and respond within 24–48 hours. If you've already filled out the interest form, we're already in touch — no need to contact us twice.
         </div>
 
         <div class="nav-footer">
