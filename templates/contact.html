@@ -13,7 +13,7 @@
             padding: 20px;
         }
         .container {
-            max-width: 540px;
+            max-width: 480px;
             margin: 0 auto;
             background: #fff;
             padding: 48px 40px;
@@ -31,33 +31,17 @@
             font-size: 1.05em;
             text-align: center;
         }
-        .contact-card {
-            background: #faf8f5;
-            border-radius: 10px;
-            padding: 28px 32px;
-            margin: 20px 0;
-            border: 1px solid #f0ebe6;
-        }
-        .contact-row {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 16px;
-            padding: 16px 0;
+        .contact-section {
+            text-align: center;
+            padding: 20px 0;
             border-bottom: 1px solid #f0ebe6;
         }
-        .contact-row:last-child {
+        .contact-section:last-of-type {
             border-bottom: none;
-            padding-bottom: 0;
         }
         .contact-icon {
-            font-size: 1.5em;
-            flex-shrink: 0;
-            width: 36px;
-            text-align: center;
-        }
-        .contact-body {
-            flex: 1;
+            font-size: 1.8em;
+            margin-bottom: 8px;
         }
         .contact-label {
             font-weight: 600;
@@ -65,16 +49,17 @@
             font-size: 0.85em;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            margin-bottom: 2px;
+            margin-bottom: 6px;
         }
         .contact-value {
             color: #3d3d3d;
-            font-size: 1.1em;
+            font-size: 1.15em;
+            word-break: break-all;
         }
         .contact-sub {
             font-size: 0.82em;
             color: #888;
-            margin-top: 2px;
+            margin-top: 4px;
         }
         .contact-note {
             margin-top: 28px;
@@ -108,28 +93,22 @@
         <h1>Contact Us</h1>
         <p class="subtitle">Have questions or ready to take the first step? Reach out anytime.</p>
 
-        <div class="contact-card">
-            <div class="contact-row">
-                <span class="contact-icon">📱</span>
-                <div class="contact-body">
-                    <div class="contact-label">Text or Call</div>
-                    <div class="contact-value">
-                        <a href="sms:+13526098705">+1 (352) 609-8705</a>
-                    </div>
-                    <div class="contact-sub">Text preferred — we respond within 24–48 hours</div>
-                </div>
+        <div class="contact-section">
+            <div class="contact-icon">📱</div>
+            <div class="contact-label">Text or Call</div>
+            <div class="contact-value">
+                <a href="sms:+13526098705">+1 (352) 609-8705</a>
             </div>
+            <div class="contact-sub">Text preferred — we respond within 24–48 hours</div>
+        </div>
 
-            <div class="contact-row">
-                <span class="contact-icon">✉️</span>
-                <div class="contact-body">
-                    <div class="contact-label">Email</div>
-                    <div class="contact-value">
-                        <a href="mailto:findyourpeoplefl@gmail.com">findyourpeoplefl@gmail.com</a>
-                    </div>
-                    <div class="contact-sub">Questions, partnerships, or to learn more</div>
-                </div>
+        <div class="contact-section">
+            <div class="contact-icon">✉️</div>
+            <div class="contact-label">Email</div>
+            <div class="contact-value">
+                <a href="mailto:findyourpeoplefl@gmail.com">findyourpeoplefl@gmail.com</a>
             </div>
+            <div class="contact-sub">Questions, partnerships, or to learn more</div>
         </div>
 
         <div class="contact-note">
