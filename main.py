@@ -312,6 +312,38 @@ def home():
 def form_page():
     return HTML_FORM
 
+import smtplib, ssl
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 465
+EMAIL_USER = "findyourpeoplefl@gmail.com"
+EMAIL_PASSWORD = "krou imoq ezgy ykgr".replace(" ", "")
+
+def send_submission_email(name, preferred_contact, availability):
+    msg = MIMEMultipart()
+    msg["From"] = EMAIL_USER
+    msg["To"] = EMAIL_USER
+    msg["Subject"] = f"New intake form submission: {name}"
+    body = f"""New submission received:
+
+Name: {name}
+Preferred contact: {preferred_contact}
+Availability: {availability}
+
+Log in to view all submissions:
+https://findyourpeople.onrender.com/submissions
+"""
+    msg.attach(MIMEText(body, "plain"))
+    try:
+        context = ssl.create_default_context()
+        with smtplib.SMTP_SSL(EMAIL_HOST, EMAIL_PORT, context=context) as server:
+            server.login(EMAIL_USER, EMAIL_PASSWORD)
+            server.sendmail(EMAIL_USER, EMAIL_USER, msg.as_string())
+    except Exception as e:
+        print(f"Email send failed: {e}")
+
 @app.post("/submit")
 def submit(
     name: str = Form(...),
@@ -350,6 +382,7 @@ def submit(
             )
         )
         conn.commit()
+    send_submission_email(name, preferred_contact, availability)
     return RedirectResponse(url="/success", status_code=303)
 
 @app.get("/success", response_class=HTMLResponse)
